@@ -1,5 +1,3 @@
-# AES
-## Lý thuyết 
 ```cpp
 #include <iostream>
 #include <vector>
