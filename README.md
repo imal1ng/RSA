@@ -4,7 +4,7 @@ Trong mật mã học, **RSA** là một thuật toán mật mã hóa khóa côn
 Hệ mã RSA được giới thiệu vào năm 1977 bởi 3 nhà khoa học **Ron Rivest, Adi Shamir, Len Adlerman**. Đây là một trong những hệ mã được sử dụng phổ biến nhất hiện nay, ứng dụng cho truyền dữ liệu an toàn qua internet, email. RSA còn là nền tảng mật mã cho các giao thức SSL/TLS, SET, SSH, PGP, … RSA cũng được ứng dụng trong chữ ký số Digital Signature.
 
 **1. Nguyên lý hoạt động của RSA dựa trên phép toán modulo, theo các bước sau :** 
-- Chọn 2 số nguyên tố lớn $p, q$ với $p \# q$, chọn hoàn toàn ngẫu nhiên.
+- Chọn 2 số nguyên tố lớn $p, q$ với $p \neq q$, chọn hoàn toàn ngẫu nhiên.
 - Tính $N = p.q$
 - Tính hàm Euler $\phi(N) = N.(1-\frac{1}{p}).(1-\frac{1}{q})$
 - Chọn một số tự nhiên $e$ sao cho $1 < e < \phi(N)$ và $gcd(e, \phi(N)) = 1$
@@ -45,7 +45,7 @@ Và $d = 358051821873346058781162283557379162647656273$
 
 
 - Code minh họa toàn bộ quá trình mã hóa và giải mã :
-```python=
+```python
 from Crypto.Util.number import *
 from sympy import *
 
@@ -88,7 +88,7 @@ Hệ mã RSA nếu được thiết kế một cách đúng đắn với việc 
 
 - Để phân tích $N$ ta có thể thử dùng hàm `factorint()` trong thư viện `sympy` 
 Ví dụ code : 
-```python=
+```python
 from sympy import *
 
 n = 589366878063882472795253646368442094378501217
@@ -106,10 +106,7 @@ print(factor)
 ## Multi-prime RSA
 Chúng ta đã biết được các mà RSA hoạt động như thế nào. Bằng việc chọn ra 2 số nguyên có độ lớn như **1024 bits, 2048 bits,...** là ta đã có thể tạo ra được một hệ thống RSA không thể bị phá vỡ (tất nhiên cũng phải chọn đúng số mũ **e**).
 
- Nhưng bạn có biết rằng về mặt lý thuyết, có thể sử dụng nhiều hơn 2 số nguyên tố để tạo cặp khóa không?. Khi đó ta sẽ có công thức như sau : 
-$$
-n = \prod_{i=1}^{k} p_i
-$$
+ Nhưng bạn có biết rằng về mặt lý thuyết, có thể sử dụng nhiều hơn 2 số nguyên tố để tạo cặp khóa không?. Khi đó ta sẽ có công thức như sau : $$n = \prod_{i=1}^{k} p_i$$
 
 $$
 \Rightarrow \varphi(n) = \prod_{i=1}^{k} (p_i - 1)
