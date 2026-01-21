@@ -1,4 +1,4 @@
-# Khái niệm cơ bản 
+# Hệ mật khóa bất đối xứng RSA
 Trong mật mã học, **RSA** là một thuật toán mật mã hóa khóa công khai. Đây là thuật toán đầu tiên phù hợp với việc tạo ra chữ ký điện tử đồng thời với việc mã hóa. Nó đánh dấu một sự tiến bộ vượt bậc của lĩnh vực mật mã học trong việc sử dụng khóa công cộng. RSA đang được sử dụng phổ biến trong thương mại điện tử và được cho là đảm bảo an toàn với điều kiện độ dài khóa đủ lớn.
 
 Hệ mã RSA được giới thiệu vào năm 1977 bởi 3 nhà khoa học **Ron Rivest, Adi Shamir, Len Adlerman**. Đây là một trong những hệ mã được sử dụng phổ biến nhất hiện nay, ứng dụng cho truyền dữ liệu an toàn qua internet, email. RSA còn là nền tảng mật mã cho các giao thức SSL/TLS, SET, SSH, PGP, … RSA cũng được ứng dụng trong chữ ký số Digital Signature.
@@ -23,9 +23,8 @@ $$
 > Khi này $c$ sẽ là đoạn văn bản đã được mã hóa dưới dạng số. Đôi khi cũng hay xài kí hiệu $ct$.
 
 Và khi họ gửi $c$ cho chúng ta thì ta sẽ dùng khóa bí mật $(N, d)$ của bản thân để giải mã theo công thức : 
-$$
-m \equiv c^{d} \pmod{N}
-$$
+
+$$m \equiv c^{d} \pmod{N}$$
 > Đôi khi cũng thay $m$ bằng kí hiệu $pt$ chỉ văn bản gốc (plaintext).
 
 Ví dụ : 
@@ -35,7 +34,7 @@ Ví dụ :
 > Trong ví dụ này ta lấy $(N, e) = (589366878063882472795253646368442094378501217, 65537)$
 
 - Khi này, Alice sẽ nhận được một chuỗi số $c$ từ người bạn Bob của mình. Cô đoán là Bob đã sử dụng khóa công khai của cô để mã hóa tin nhắn và gửi cho mình. Lúc này, Alice sẽ sử dụng khóa bí mật $(N, d)$ của bản thân để giải mã theo công thức : $m \equiv c^{d} \pmod{N}$
-> Ta có : $N = 589366878063882472795253646368442094378501217 = 31008534136543705961237 * 19006602358842586656541$
+> Ta có : $N = 589366878063882472795253646368442094378501217 = 31008534136543705961237 \times 19006602358842586656541$
 Khi này dễ dàng tính được : $\phi(N) = 589366878063882472795203631231946708085883440$
 Và $d = 358051821873346058781162283557379162647656273$
 
@@ -106,18 +105,18 @@ print(factor)
 ## Multi-prime RSA
 Chúng ta đã biết được các mà RSA hoạt động như thế nào. Bằng việc chọn ra 2 số nguyên có độ lớn như **1024 bits, 2048 bits,...** là ta đã có thể tạo ra được một hệ thống RSA không thể bị phá vỡ (tất nhiên cũng phải chọn đúng số mũ **e**).
 
- Nhưng bạn có biết rằng về mặt lý thuyết, có thể sử dụng nhiều hơn 2 số nguyên tố để tạo cặp khóa không?. Khi đó ta sẽ có công thức như sau : $$n = \prod_{i=1}^{k} p_i$$
+Nhưng bạn có biết rằng về mặt lý thuyết, có thể sử dụng nhiều hơn 2 số nguyên tố để tạo cặp khóa không?. Khi đó ta sẽ có công thức như sau :
 
-$$
-\Rightarrow \varphi(n) = \prod_{i=1}^{k} (p_i - 1)
-$$
+$$n = \prod_{i=1}^{k} p_i$$
+
+$$\Rightarrow \varphi(n) = \prod_{i=1}^{k} (p_i - 1)$$
 
 Bạn có thể tự hỏi, tại sao ai đó lại muốn làm điều đó? Chẳng phải điều này sẽ làm giảm tính bảo mật vì các số nguyên tố sẽ nhỏ hơn đối với cùng một độ dài khóa sao?
 
 Mặc dù đúng là các thừa số sẽ nhỏ hơn nếu bạn sử dụng nhiều số nguyên tố hơn cho một độ dài khóa nhất định, nhưng điều đó không phải là một vấn đề bảo mật nghiêm trọng miễn là chúng không quá nhỏ. Nếu các số nguyên tố riêng lẻ có thể được tìm ra bằng các thuật toán phân tích nhân tử đã biết như ECM (Elliptic Curve Method), thì đó rõ ràng là một ý tưởng tồi. Nhưng nếu không, miễn là tổng kích thước của Modulo đủ lớn, thì việc phân tích nhân tử không phải là một mối đe dọa. Số lượng số nguyên tố bạn sử dụng càng nhiều, kích thước của Modulo càng lớn hơn.
 
 Ví dụ : 
-```python=
+```python
 p1, p2, p3, p4, p5 = 101, 181, 367, 487, 997 
 m = 1999
 
@@ -146,26 +145,23 @@ print(pt)
 
 - Đầu tiên, ta tính $gcd(e_1, e_2)$, thường sẽ là $1$.
 - Dựa vào lý thuyết, tồn tại 2 số $u, v$ sao cho :
-$$
-u.e_1 + v.e_2 = gcd(e_1, e_2) = 1
-$$
+
+$$u.e_1 + v.e_2 = gcd(e_1, e_2) = 1$$
 
 - Biết rằng : $c_1 = m^{e_1} \Leftrightarrow (c_1)^{u} = (m^{e_1})^{u} \Leftrightarrow (c_1)^{u} = m^{{e_1}.{u}}$
 > Tương tự : $c_2 = m^{e_2} \Leftrightarrow (c_2)^{v} = (m^{e_2})^{v} \Leftrightarrow (c_2)^{v} = m^{{e_2}.{v}}$
 
 - Lấy $(c_1)^{u} \times (c_2)^{v}$ ta có : 
-$$
-(c_1)^{u} \times (c_2)^{v} \Leftrightarrow m^{{e_1}.{u}} \times m^{{e_2}.{v}} = m^{{e_1}.{u} + {e_2}.{v}} = m^1 = m
-$$
+
+$$(c_1)^{u} \times (c_2)^{v} \Leftrightarrow m^{{e_1}.{u}} \times m^{{e_2}.{v}} = m^{{e_1}.{u} + {e_2}.{v}} = m^1 = m$$
 
 Như vậy, chỉ việc tìm ra được $u, v$ dựa trên thuật toán **Euclid mở rộng** là ta đã có được văn bản gốc $m$ mà chẳng cần phải cố gắng phân tích $N = p.q$.
 
 Code ví dụ : 
-```python=
+```python
 from Crypto.Util.number import *
 from sympy import *
 import math
-
 
 n = 17836315959849005845422913663414767117290475262210084622418539759689446526987983742651500754163602658702257438603344638391750819833709014484652708660912517485982576088329107650903579302135534346444527279395069706657542682545893504177489484878621091879201295227306042107538374526455876591399833571819123247023786020228360607799594672502655951840534378236130046255384167067161776621232261217694793553143425503847220013445117355362394757758134988247473606426051594142031253234833680135858089993033130033931424522824906259429530883731507010765394295893181162700003958569803358503992193879775739289254856625735853342656691
 e1 = 65537
@@ -199,43 +195,33 @@ Nếu ở phần trên, bạn tấn công với tư cách là người ngoài t�
 
 
 Để có được khóa bí mật $d$ thì cần phải thỏa mãn công thức: 
-$$
-e.d \equiv 1 \pmod{\phi(N)}
-$$
+
+$$e.d \equiv 1 \pmod{\phi(N)}$$
 
 Công thức này tương đương : 
-$$
-k.\phi(N) + 1 = e.d
-$$
 
-$$
-\Leftrightarrow k = \frac{e.d - 1}{\phi(N)}
-$$
+$$k.\phi(N) + 1 = e.d$$
+
+$$\Leftrightarrow k = \frac{e.d - 1}{\phi(N)}$$
 >$k$ là phần nguyên trong phép chia $e.d$ với $\phi(N)$
 
 Vì $N > \phi(N)$ nên ta có : 
-$$
-\frac{1}{N} < \frac{1}{\phi(N)}
-$$
 
-$$
-\Leftrightarrow \frac{e.d - 1}{N} < \frac{e.d - 1}{\phi(N)} 
-$$
+$$\frac{1}{N} < \frac{1}{\phi(N)}$$
 
-$$
-\Leftrightarrow k_2 < k_1
-$$
+$$\Leftrightarrow \frac{e.d - 1}{N} < \frac{e.d - 1}{\phi(N)}$$
+
+$$\Leftrightarrow k_2 < k_1$$
 
 Ở đây $k_2$ hoàn toàn có thể tính được. Sau khi có được $k_2$ thì ta sẽ tăng $k_2$ lên sao cho đến một lúc nào đó:
-$$
-k_2 = \frac{e.d - 1}{\phi(N)} 
-$$
+
+$$k_2 = \frac{e.d - 1}{\phi(N)} $$
 > Ta có thể làm như vậy vì khi $N$ đủ lớn thì $N \approx \phi(N)$
 > - $k$ tỉ lệ nghịch với $N$
 > - Tăng $k$ đồng nghĩa với giảm $N$ sao cho một lúc nào đó $N = \phi(N)$
 
 Ví dụ : 
-```python=
+```python
 # Given : 
 N = 117704067672883037376030830145700215357572435982701916566499889223000013519955331766548499616330205185281466326045375998482067680554871351096186175802407426623567339183089956168585674798584299942705999002628197040366578193734017048991401354035799191823625940444165646453369894762305964576694418965387598209207
 e = 525001
@@ -257,14 +243,11 @@ while True:
 #k = 707618
 #phi = 67072558684817278476295226349160463634377346701307969824878730241709809667324769293816924034349617514177020214468155072174640053932659940729672403544392802945824857639073737368705350388591680740828758467561400319746538642033151453024407645263826145512436963512764739461881095176482338279563571871992217944276
 ```
-Sau khi có được $\phi(N)$ thì ta hoàn toàn có thể tính được : 
-$$
-d = e^{-1} \mod(\phi(N))
-$$
+Sau khi có được $\phi(N)$ thì ta hoàn toàn có thể tính được :
+
+$$d = e^{-1} \mod(\phi(N))$$
 
 Đây là khóa bí mật của người mà bạn muốn tấn công.
-
-
 
 
 
@@ -275,35 +258,26 @@ $$
 Tuy nhiên, ta lại bỏ qua một điều quan trọng khác đó là số mũ $e$. Nếu mà chọn số $e$ quá nhỏ như $e=1, e=3,...$ thì đó sẽ trở thành lỗ hổng lớn để kẻ tấn công khai thác.
 
 Ví dụ : Ta đã biết công thức mã hóa
-$$
-c \equiv m^{e} \pmod{N}
-$$
+
+$$c \equiv m^{e} \pmod{N}$$
 
 Khi mà $e$ quá nhỏ thì sẽ dẫn đến $m^{e} < N$, từ đó : $m^{e}$ **mod** $N$ $=$ $m^{e}$
 
 Hay chính là : 
-$$
-c = m^{e}
-$$
 
-$$
-\Leftrightarrow c^{\frac{1}{e}} = m
-$$
+$$c = m^{e}$$
+
+$$\Leftrightarrow c^{\frac{1}{e}} = m$$
 
 Ta chỉ cần lấy văn bản đã mã hóa $c$ và mũ $\frac{1}{e}$ thì sẽ ra được văn bản gốc $m$ vì $e$ lúc này đã quá nhỏ để dễ dàng tính.
 
-Nhưng giả sử $m$ đủ lớn để khi này $m^{e} > N$, ta vẫn có thể tính được như sau : 
-$$
-c \equiv m^{e} \pmod{N}
-$$
+Nhưng giả sử $m$ đủ lớn để khi này $m^{e} > N$, ta vẫn có thể tính được như sau :
 
-$$
-\Leftrightarrow m^{e} = c + k.N
-$$
+$$c \equiv m^{e} \pmod{N}$$
 
-$$
-\Leftrightarrow m = (c + k.N)^{\frac{1}{e}}
-$$
+$$\Leftrightarrow m^{e} = c + k.N$$
+
+$$\Leftrightarrow m = (c + k.N)^{\frac{1}{e}}$$
 
 Với $k$ là một nhỏ nào đó, ta Brute force $k$ đến khi nào có thể căn ra được thì dừng.
 
@@ -315,12 +289,12 @@ Với $k$ là một nhỏ nào đó, ta Brute force $k$ đến khi nào có th�
 ## Hastad’s Broadcast Attack
 Cũng như những nội dung đã nói trong phần **Small public exponent**, nhưng xét trong trường hợp tin nhắn quá dài thì cũng sẽ rất khó để tính căn được. Tuy nhiên thì Ciphertext lại được gửi đi cho nhiều người khác sử dụng chung một $𝑒$ hoặc là nhiều người cùng gửi cho mình một tin nhắn có nội dung giống nhau, sử dụng cùng một $𝑒$.
 
-Giả sử $m$ là văn bản gốc, đặt $M = m^{e}$. Khi này ta có ciphertext là : 
-$$
-c_i \equiv M \pmod{N_i}
-$$
+Giả sử $m$ là văn bản gốc, đặt $M = m^{e}$. Khi này ta có ciphertext là :
+
+$$c_i \equiv M \pmod{N_i}$$
 
 Xét hệ phương trình Modulo : 
+
 $$
 \begin{cases} 
 M \equiv c_1 \pmod{N_1} \\ 
@@ -335,7 +309,7 @@ Bây giờ ta sẽ sử dụng **[Định lý thặng dư Trung Hoa (CRT)](https
 ![{F05B5AE1-1E10-4C1D-9317-546B18C2E63D}](https://hackmd.io/_uploads/HJWlyKFV1e.png)
 
 Thuật toán : 
-```python=
+```python
 from Crypto.Util.number import *
 import gmpy2
 
@@ -358,7 +332,7 @@ M = (list_c[0]*y1*N1 + list_c[1]*y2*N2 + list_c[2]*y3*N3) % N
 print(M)
 ```
 Ví dụ minh họa giải phương trình trên : 
-```python=
+```python
 from Crypto.Util.number import *
 import gmpy2
 
@@ -389,6 +363,7 @@ print(M)
 Chúng ta đã thấy rằng **Định lý phần dư Trung Hoa (CRT)** có thể được sử dụng để tăng tốc quá trình mã hóa và giải mã RSA. Trong trường hợp này, chúng ta quan tâm đến quá trình giải mã.
 
 Để giải mã RSA bằng CRT, ta cần tính:
+
 $$
 \begin{cases}
 d_p \equiv e^{-1} \mod(p-1) \\
@@ -399,6 +374,7 @@ $$
 Ở đây có thể hiểu $e$ phải là nghịch đảo của $d_p$ trong modulo $p-1$, tương tự với $d_q$ trong modulo $q-1$. Nếu như $e$ được chọn không đúng, $d_p$ và $d_q$ có thể nhỏ đến mức có thể brute-force.
 
 Hãy bắt đầu với công thức $d_p$. Ta có : 
+
 $$
 d_p \equiv e^{-1} \mod(p-1)
 $$
@@ -412,11 +388,13 @@ $$
 $$
 
 Chọn một số nguyên $r$ sao cho $gcd(r, p) = 1$
+
 $$
 => r^{d_p.e} = r^{k.(p-1) + 1} = r.(r^{p-1})^{k}
 $$
 
 Theo định lý Fermat nhỏ thì ta có : 
+
 $$
 (r^{p-1})^{k} \equiv 1^k \pmod{p} \equiv 1 \pmod{p} 
 $$
@@ -426,6 +404,7 @@ $$
 $$
 
 Từ đây ta có thể suy ra : 
+
 $$
 r^{e.d_p} \equiv r \mod(p)
 $$
@@ -439,6 +418,7 @@ $$
 $$
 
 Từ đây ta có : 
+
 $$
 gcd(r^{e.d_p} - r, n) = gcd(k.p, p.q) = p
 $$
@@ -446,7 +426,7 @@ $$
 Khi $e$ chọn sai cách sẽ dẫn đến việc $d_p$ trở nên khá nhỏ nên ta hoàn toàn có thể brute-force $d_p$. Từ đó có thể tính được $p$.
 
 Ví dụ : 
-```python=
+```python
 n = 95580702933509662811256129990158655210667121276245053843875590334281563078868202152845967187641817281520364662600110239110410372520340630639373679599982371620736610194814723749147422221945978800055101110346161945811520158431287139909125886966214800526831490560384144156085296004816333892025839072729987354233
 e = 1817084480271067137841898198122075168542117135135738925285694555698012943264936112861815937200507849960517390660821911331068907250788900674614345400567411
 
@@ -470,6 +450,7 @@ Khi chúng ta nói về các cuộc tấn công vào RSA CRT, hãy tập trung v
 
 
 Ta sẽ **"sign"** Plaintext với từng số mũ $d_p, d_q$ trong Modulo $p,q$. Cụ thể
+
 $$
 \begin{cases}
 s_p \equiv m^{d_p} \pmod{p} \\
@@ -503,11 +484,13 @@ $$
 $$
 
 Khi này, $s^e - m$ sẽ là bội của $n$ với việc : 
+
 $$
 gcd((s^e - m), n) = gcd(k_3.n, n) = n
 $$
 
 Thế nhưng, khi chỉ cần 1 phần **"sign"** với $p$ hoặc $q$ bị lỗi 1 bit hoặc là nhiều bits, ta sẽ thấy ngay 1 điều khá thú vị :smile: 
+
 $$
 \begin{cases}
 s^e \not\equiv m \mod(p) \\
@@ -530,6 +513,7 @@ $$
 $$
 
 Chữ kí đã xác minh $s^e$ đồng dư với $m$ theo Modulo $q$ nhưng không theo Modulo $p$. Khi đó ta có : 
+
 $$
 \Rightarrow gcd((s^e - m), n) = gcd(k_3.q, n) = q
 $$
@@ -538,7 +522,7 @@ Ta có thể tìm được một trong hai số $p,q$, từ đó có thể tìm 
 
 Cuộc tấn công này chỉ có hiệu quả nếu kẻ tấn công biết trước Plaintext. Điều này cũng có nghĩa là không có bất kỳ cơ chế đệm ngẫu nhiên nào được áp dụng lên thông điệp trước khi ký.
 
-```python=
+```python
 from Crypto.Util.number import*
 from functools import reduce
 import gmpy2
@@ -581,6 +565,7 @@ p = gmpy2.gcd(a, n)
 print(n // p == q)
 ```
 Khi chạy code thì ta sẽ có $(N,e,c)$, hoàn toàn không hề biết $p,q$. Ta đã gây lỗi ở giai đoạn tính $s_q$ nên khi này, khi nhập $m$ bất kì vào, ta có thể đem đi **sign m** rồi tính : 
+
 $$
 a = s^e - m \\
 \Rightarrow p = gcd(a, n)
@@ -597,6 +582,7 @@ Như vậy ta đã có được $p$, tìm $q$ nữa là xong.
 - Để cấu tạo nên $N$ thì cần phải chọn ra 2 số nguyên tố $p, q$ đủ lớn để nhân lại với nhau thành $N$. Tuy nhiên, việc chọn 2 số nguyên tố $p, q$ quá gần nhau cũng là một lỗ hỏng lớn dễ bị khai thác. Ví dụ : $p = 11, q = 13$. 
 
 - Tổng quát hơn, nếu $p, q$ thỏa : 
+
 $$
 0 < p - q < \sqrt[4]{N}
 $$
@@ -604,11 +590,13 @@ $$
 - Thì đó là lúc **Fermat’s attack** phát huy tác dụng.
 
 Xét : 
+
 $$
 N = p.q = (\frac{p+q}{2})^2 - (\frac{p-q}{2})^2
 $$
 
 - Đặt $a = \frac{p+q}{2}$ và $b = \frac{p-q}{2}$ ta có : 
+
 $$
 N = a^{2} - b^{2} = (a+b).(a-b) = p.q
 $$
@@ -616,12 +604,14 @@ $$
 - Khi này ta có : $p = (a+b)$ và $q = (a-b)$ (đồng nhất thức)
 
 Vì $p, q$ khá gần nhau nên ta có : 
+
 $$
 \frac{p+q}{2} \approx \sqrt{N} = \sqrt{p.q}
 $$
 >Đây chính là liên hệ tới bất đẳng thức Cauchy, dấu "=" xảy ra khi và chỉ khi $p = q$, còn khi $p, q$ là 2 số gần nhau thì ta có đẳng thức trên.
 
 - Thế $p = (a+b)$ và $q = (a-b)$ vào ta có : 
+
 $$
 \frac{2a}{2} \approx \sqrt{N} \Leftrightarrow a \approx \sqrt{N}
 $$
@@ -638,6 +628,7 @@ $$
 - Ta sẽ kiểm tra xem $b^{2}$ có phải một số chính phương hay không, nếu không thì ta tiếp tục tăng $a$ lên đến khi nào kết quả là một số chính phương thì dừng.
 
 - Có $b^{2}$ là một số chính phương, ta dễ dàng tính được $p, q$ với
+
 $$
 \begin{cases} 
 p = a + b \\ 
@@ -646,10 +637,10 @@ q = a - b \\
 $$
 
 Code mẫu : 
-```python=
+```python
 import math 
 
-N = int(input("Nhập N :"))
+N = 
 
 a = math.isqrt(N)
 if a*a < N:
@@ -674,6 +665,7 @@ Một biến thể khác của Fermat’s attack, nhưng nó đơn giản hơn n
 Một vài cặp số nguyên tố sinh đôi tiêu biểu : $(3,5),(11,13),(17,19),(29,31),...$
 
 Và khi này ta sẽ có : 
+
 $$
 n = p.q
 $$
@@ -687,6 +679,7 @@ $$
 $$
 
 Với $\Delta = 4 + 4n$, ta có : 
+
 $$
 \begin{cases}
 x_1 = \frac{-b + \sqrt{\Delta}}{2a} = \frac{-2 + \sqrt{4n + 4}}{2} = \frac{-2 + \sqrt{4n + 4}}{2} = \sqrt{n+1} - 1  \\
@@ -716,6 +709,7 @@ $$
 > Nó có nghĩa là $e$ và $d$ là $2$ đại lượng tỉ lệ nghịch với nhau, là nghịch đảo Modulo $\phi(N)$. Chính vì vậy, khi $e$ quá lớn sẽ dẫn đến việc $d$ trở nên quá nhỏ, từ đó rất dễ bị tấn công. Tiêu biểu nhất đó chính là : **Wiener’s attack**.
 
 Điều kiện để thực hiện Wiener’s attack là : 
+
 $$
 \begin{cases}
 d < \frac{1}{3} \sqrt[4]{N} \\
@@ -738,7 +732,7 @@ import owiener
 d = owiener.attack(e,N)
 ```
 Ví dụ : 
-```python=
+```python
 import owiener
 from Crypto.Util.number import long_to_bytes
 
@@ -761,6 +755,7 @@ print(long_to_bytes(m).decode())
 
 ## Boneh Durfee Attack
 Một biến thể khác của Wiener’s attack, nhưng điều kiện ở đây là : 
+
 $$
 d < N^{0.292}
 $$
@@ -791,31 +786,36 @@ Hãy thử giả sử như thế này :
 
 Chính vì vậy, vấn đề được đặt ra là làm sao có thể qua mặt được Server, gửi vào $ct$ mà Server sẽ giải mã giúp chúng ta để nhập được Flag?
 - Đầu tiên, ta biết được công thức mã hóa là : 
+
 $$
 c \equiv M^{e} \pmod{N}
 $$
 
 - Nhân $c$ với một thành phần $r$ là :  
+
 $$
 r^{e} mod (N)
 $$
 
 - Ta có: 
+
 $$
 M' \equiv r^{e}.c \pmod{N}
 $$
 - Khi đưa cho Server giải mã thì Server sẽ dùng khóa bí mật của mình : 
+
 $$
 (M')^{d} = r^{e.d} \times c^{d} = r^{e.d} \times M^{e.d} = r \times M
 $$
 - Server sẽ kiểm tra và sẽ thấy đó là một tin nhắn có dạng : $M \times r$, và Server sẽ chẳng thể phát hiện ra đó là Flag. Còn chúng ta sau khi nhận được chuỗi mà Server trả về thì chỉ cần tính : 
+
 $$
 M = \frac{M'}{r}
 $$
 
 Và thế là ta đã có thể qua mặt được Server mà không lo bị phát hiện!
 >Ví dụ: Challenge Baby Crypto BITSCTF2025
-```python=
+```python
 from Crypto.Util.number import *
 
 #given value
@@ -837,7 +837,7 @@ print((long_to_bytes(fake_plaintext // r)).decode())
 
 ## Parity Oracle (LSB Oracle)
 Hãy giả thử ta có một challenge như sau : 
-```python=
+```python
 from Crypto.Util.number import *
 from os import urandom
 
@@ -884,6 +884,7 @@ Cho $m$ là Plaintext dạng số nguyên. Bạn sẽ chẳng biết được đ
 - Nếu $2m < n$ thì $2m$ **mod** $n$ sẽ là số lẻ vì $n$ là số lẻ. 
 
 Giả sử ta gửi đến Server một Ciphertext có dạng là $2m$. Nếu kết quả trả về là `odd` thì chứng tỏ : 
+
 $$
 2m > n
 $$
@@ -900,6 +901,7 @@ $$
 Như vậy khi thay đổi thành $4m$ thì ta sẽ thu về một kết quả chẵn trong phép tính $4m \mod(n)$ và $4m-2n<n$
 
 Từ đó suy ra : $m<\frac{3n}{4}$. Như vậy khi này ta đã có khoảng giá trị mới của $m$ là : 
+
 $$
 \frac{n}{2} < m < \frac{3n}{4}
 $$
@@ -932,12 +934,14 @@ Về cơ chế hoạt động của hệ thống : Một Server thường kiểm
 
 Nếu mà Ciphertext sau khi giải mã không theo đúng cấu trúc Padding của **PKCS#1 v1.5** thì nó sẽ bị coi là không hợp lệ.
 
-Ý tưởng tấn công như sau : Giả sử, ta có được Ciphertext $c_0$, bây giờ ta cần phải tìm ra Plaintext $m_0$. Trước hết, ta sẽ nhân $c_0$ với một hằng số $s_1^e$ bất kì. Ta có : 
+Ý tưởng tấn công như sau : Giả sử, ta có được Ciphertext $c_0$, bây giờ ta cần phải tìm ra Plaintext $m_0$. Trước hết, ta sẽ nhân $c_0$ với một hằng số $s_1^e$ bất kì. Ta có :
+
 $$
 c' \equiv c_0\times s_1^e \mod(N)
 $$
 
 Sau đó gửi $c'$ cho hệ thống để hệ thống kiểm tra. 
+
 $$
 m' \equiv (c')^d \mod(N)
 $$
@@ -956,6 +960,7 @@ $$
 Nếu như kết quả trả về là `Invalid Padding` thì ta sẽ biến đổi $r$ sao cho tới lúc nào đó $c'$ của ta giải mã ra được $m'$ theo đúng format Padding của **PKCS#1 v1.5**.
 
 Chọn hằng số $B = (2^{8})^{(k-2)}$, với $k$ là kích thước của khóa tình bằng byte và vì 2 byte đầu tiên là `0x00` và `0x02` nên mới trừ 2. Khi này, nếu $m'$ được hệ thống báo là `Valid Padding` thì điều đó có nghĩa là : 
+
 $$
 2B \leq m.s_1\mod(N) < 3B
 $$
@@ -963,6 +968,7 @@ $$
 >Còn nếu các byte còn lại là `0xFF` thì $m_{max} = 0x0002FF...FF=3\times (2^{8})^{(k-2)}-1=3B-1$
 
 Khi này ta có : 
+
 $$
 2B \leq m.s_1\mod(N) < 3B
 $$
@@ -976,6 +982,7 @@ $$
 $$
 
 Vậy là ta đã có khoảng không gian của $m$, bây giờ ta tiếp tục chọn $s_2>s_1$ và khi đó : 
+
 $$
 \frac{2B+r_2N}{s_2} \leq m < \frac{3B+r_2N}{s_2}
 $$
@@ -987,63 +994,52 @@ Với $s$ ngày càng tăng, thì khoảng không gian của $m$ sẽ ngày càn
 
 
 ## Franklin-Reiter Related Message Attack
-Giả sử rằng, có hai Plaintext $m_1, m_2$ thỏa mãn : 
-$$
-\begin{cases}
+Giả sử rằng, có hai Plaintext $m_1, m_2$ thỏa mãn :
+
+$$\begin{cases}
 m_1, m_2 < N \\
 m_1\neq m_2 \\
 m_1 \equiv f(m_2) \mod(N)
-\end{cases}
-$$
+\end{cases}$$
 >Trong đó : f là một đa thức đã biết trước với $f \in Z_N[x]$.
 
 Hai Plaintext sẽ được mã hóa cùng với một cặp khóa công khai $(N,e)$ cho ra $c_1,c_2$. Khi này, chỉ với 5 thứ $(N,e,c_1,c_2,f)$ thì kẻ tấn công có thể khôi phục lại $m_1,m_2$ bằng cách tấn công **Franklin-Reiter Related Message Attack**
 
+Trước hết, ta có $c_1, c_2$ được tính như sau :
 
-Trước hết, ta có $c_1, c_2$ được tính như sau : 
-$$
-\begin{cases}
+$$\begin{cases}
 c_1 \equiv m_1^e \mod(N)\\
 c_2 \equiv m_2^e \mod(N)
-\end{cases}
-$$
+\end{cases}$$
 
-$$
-\Leftrightarrow
-\begin{cases}
+$$\Leftrightarrow \begin{cases}
 c_1 \equiv f(m_2)^e \mod(N)\\
 c_2 \equiv m_2^e \mod(N)
-\end{cases}
-$$
+\end{cases}$$
 
-$$
-\Leftrightarrow
-\begin{cases}
+$$\Leftrightarrow \begin{cases}
 f(m_2)^e-c_1\equiv0 \mod(N)\\
 m_2^e-c_2\equiv0 \mod(N)
-\end{cases}
-$$
+\end{cases}$$
 
-Ở đây ta đặt hai đa thức là : 
-$$
-\begin{cases}
+Ở đây ta đặt hai đa thức là :
+
+$$\begin{cases}
 g_1(x) = f(x)^e - c_1 \\
 g_2(x) = x^e-c_2
-\end{cases}
-$$
+\end{cases}$$
 
-Rõ ràng, $m_2$ chính là nghiệm của hai đa thức trên. Vì vậy khi này $g_1(x), g_2(x)$ có thể được biểu diễn dưới dạng : 
-$$
-\begin{cases}
+Rõ ràng, $m_2$ chính là nghiệm của hai đa thức trên. Vì vậy khi này $g_1(x), g_2(x)$ có thể được biểu diễn dưới dạng :
+
+$$\begin{cases}
 g_1(x) = (x - m_2)\times h(x)\\
 g_2(x) = (x - m_2)\times k(x)
-\end{cases}
-$$
+\end{cases}$$
 
 Tính $gcd(g_1(x), g_2(x))$ ta sẽ thu về đa thức là $x-m_2$. Và từ $m_2$ ta sẽ biết được $m_1$. Như vậy là đã khôi phục được $m_1, m_2$
 
 Cho ví dụ : 
-```python=
+```python
 n = 68007326677123246855707509021929485918262392646245153968636369177958002263252150394862511754489257164799872563691509793233359811292834044386797899774459719385291291786061631482155775076849283214761442119636868351483847755567247145916829462488162526011687463279702448822423846544508858429582655001573846966299
 e = 11
 c1 = 3159267829959640630802384707593395329177253033536953466620232231296040007516225718163378216922538797476739250190027969907253177312088023051078852131251322639661013679807543259237032863511445620076733726920794749552107456327494453778930293694198601969921916195106576840593482826787853436552108243341230749570
@@ -1054,49 +1050,39 @@ a = 30814223209559653
 b = 4884502491372219560879160938162303598227406622417219546947279500681239184181782
 ```
 
-Với việc đề cho mối quan hệ giữa $m_1$ và $m_2$ ta xét hệ phương trình sau : 
-$$
-\begin{cases}
+Với việc đề cho mối quan hệ giữa $m_1$ và $m_2$ ta xét hệ phương trình sau :
+
+$$\begin{cases}
 c_1 \equiv m_1^e \mod(N)\\
 c_2 \equiv m_2^e \mod(N)
-\end{cases}
-$$
+\end{cases}$$
 
-$$
-\Leftrightarrow
-\begin{cases}
+$$\Leftrightarrow \begin{cases}
 m_1^e-c_1\equiv 0 \mod(N)\\
 m_2^e-c_2 \equiv 0\mod(N)
-\end{cases}
-$$
+\end{cases}$$
 
-$$
-\Leftrightarrow
-\begin{cases}
+$$\Leftrightarrow \begin{cases}
 m_1^e-c_1\equiv 0 \mod(N)\\
 (a.m_1 + b)^e-c_2 \equiv 0\mod(N)
-\end{cases}
-$$
+\end{cases}$$
 
 Đặt : 
-$$
-\begin{cases}
+$$\begin{cases}
 g_1(x) = x^e-c_1\\
 g_2(x) = (a.x + b)^e-c_2
-\end{cases}
-$$
-Với $x=m_1$ là nghiệm của hệ phương trình thì ta có : 
-$$
-\begin{cases}
+\end{cases}$$
+
+Với $x=m_1$ là nghiệm của hệ phương trình thì ta có :
+
+$$\begin{cases}
 g_1(x) = (x - m_1)\times h(x)\\
 g_2(x) = (x - m_1)\times k(x)\\
-\end{cases}
-$$
+\end{cases}$$
 
-$$
-\Rightarrow gcd(g_1(x), g_2(x)) = x - m_1$$
+$$\Rightarrow gcd(g_1(x), g_2(x)) = x - m_1$$
+
 Ở đây mình sẽ dùng **[tools](https://github.com/ashutosh1206/Crypton/blob/master/RSA-encryption/Attack-Franklin-Reiter/exploit.sage)** để giải bài này. Có được $m_1$ thì chỉ cần decode nữa là xong.
-
 
 
 
