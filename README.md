@@ -16,7 +16,8 @@ Khi này ta có 2 cặp khóa bí mật và công khai :
 
 Giả sử ai đó có một văn bản **plaintext (pt)** cần được mã hóa thành **ciphertext (ct)** để gửi cho bạn : 
 - Bước 1 : Họ phải chuyển đổi đoạn văn bản đó sang toàn là số trước, gọi là $m$.
-- Bước 2 : Họ sẽ sử dụng khóa công khai $(N, e)$ của bạn để mã hóa văn bản đó với công thức : 
+- Bước 2 : Họ sẽ sử dụng khóa công khai $(N, e)$ của bạn để mã hóa văn bản đó với công thức :
+
 $$
 c \equiv m^{e} \pmod{N} 
 $$
@@ -35,8 +36,10 @@ Ví dụ :
 
 - Khi này, Alice sẽ nhận được một chuỗi số $c$ từ người bạn Bob của mình. Cô đoán là Bob đã sử dụng khóa công khai của cô để mã hóa tin nhắn và gửi cho mình. Lúc này, Alice sẽ sử dụng khóa bí mật $(N, d)$ của bản thân để giải mã theo công thức : $m \equiv c^{d} \pmod{N}$
 > Ta có : $N = 589366878063882472795253646368442094378501217 = 31008534136543705961237 \times 19006602358842586656541$
-Khi này dễ dàng tính được : $\phi(N) = 589366878063882472795203631231946708085883440$
-Và $d = 358051821873346058781162283557379162647656273$
+> 
+> Khi này dễ dàng tính được : $\phi(N) = 589366878063882472795203631231946708085883440$
+> 
+> Và $d = 358051821873346058781162283557379162647656273$
 
 - Sau khi giải mã, Alice sẽ biết được nội dụng mà Bob gửi cho cô và cô có thể trả lời lại.
 ![image](https://hackmd.io/_uploads/SJPFEzENye.png)
