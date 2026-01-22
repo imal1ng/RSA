@@ -1071,7 +1071,8 @@ m_1^e-c_1\equiv 0 \mod(N)\\
 (a.m_1 + b)^e-c_2 \equiv 0\mod(N)
 \end{cases}$$
 
-Đặt : 
+Đặt :
+
 $$\begin{cases}
 g_1(x) = x^e-c_1\\
 g_2(x) = (a.x + b)^e-c_2
