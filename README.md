@@ -731,7 +731,7 @@ Ta có thể cài `thư viện Owiener` bằng lệnh `pip install owiener` tron
 ![{743A4D22-18C1-43AA-ADAE-0062DCFB20EF}](https://hackmd.io/_uploads/B1yih2SEkg.png)
 
 Sau khi cài thì ta chỉ cần khai báo và xài lệnh tìm $d$ là xong 
-```python=
+```python
 import owiener
 d = owiener.attack(e,N)
 ```
