@@ -1,9 +1,9 @@
 # Hệ mật khóa bất đối xứng RSA
-Trong mật mã học, **RSA** là một thuật toán mật mã hóa khóa công khai. Đây là thuật toán đầu tiên phù hợp với việc tạo ra chữ ký điện tử đồng thời với việc mã hóa. Nó đánh dấu một sự tiến bộ vượt bậc của lĩnh vực mật mã học trong việc sử dụng khóa công cộng. RSA đang được sử dụng phổ biến trong thương mại điện tử và được cho là đảm bảo an toàn với điều kiện độ dài khóa đủ lớn.
+Trong mật mã học, **RSA** là một thuật toán mật mã hóa khóa công khai. Đây là thuật toán đầu tiên phù hợp với việc tạo ra chữ ký điện tử đồng thời với việc mã hóa. Nó đánh dấu một sự tiến bộ vượt bậc của lĩnh vực mật mã học trong việc sử dụng khóa công khai. RSA đang được sử dụng phổ biến trong thương mại điện tử và được cho là đảm bảo an toàn với điều kiện độ dài khóa đủ lớn.
 
-Hệ mã RSA được giới thiệu vào năm 1977 bởi 3 nhà khoa học **Ron Rivest, Adi Shamir, Len Adlerman**. Đây là một trong những hệ mã được sử dụng phổ biến nhất hiện nay, ứng dụng cho truyền dữ liệu an toàn qua internet, email. RSA còn là nền tảng mật mã cho các giao thức SSL/TLS, SET, SSH, PGP, … RSA cũng được ứng dụng trong chữ ký số Digital Signature.
+Hệ mã RSA được giới thiệu vào năm 1977 bởi 3 nhà khoa học **Ron Rivest, Adi Shamir, Len Adlerman**. Đây là một trong những hệ mã được sử dụng phổ biến nhất hiện nay, ứng dụng cho truyền dữ liệu an toàn qua internet, email. RSA còn là nền tảng mật mã cho các giao thức SSL/TLS, SET, SSH, PGP, … RSA cũng được ứng dụng trong chữ ký số (Digital Signature).
 
-**1. Nguyên lý hoạt động của RSA dựa trên phép toán modulo, theo các bước sau :** 
+**1. Nguyên lý hoạt động của RSA dựa trên số học Modulo, cụ thể theo các bước sau :** 
 - Chọn 2 số nguyên tố lớn $p, q$ với $p \neq q$, chọn hoàn toàn ngẫu nhiên.
 - Tính $N = p.q$
 - Tính hàm Euler $\phi(N) = N.(1-\frac{1}{p}).(1-\frac{1}{q})$
@@ -704,7 +704,8 @@ Ví dụ :
 
 - Cái gì quá thì cũng không tốt, điều đó đúng với cả số mũ $e$
 
-- Ta biết rằng, số mũ công khai $e$ và số mũ bí mật $d$ liên hệ với nhau qua công thức : 
+- Ta biết rằng, số mũ công khai $e$ và số mũ bí mật $d$ liên hệ với nhau qua công thức :
+
 $$
 e.d \equiv 1 \pmod{\phi(N)}
 $$
